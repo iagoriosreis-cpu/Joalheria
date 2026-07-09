@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurum & Noir — Alta Joalheria</title>
+<meta name="description" content="Aurum & Noir. Joias que atravessam gerações. Ouro 18k, curadoria artesanal, peças únicas.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger via CDN -->
+<!-- Justificativa: GSAP+ScrollTrigger é usado apenas onde precisamos de timelines coordenadas
+     (split-text do hero, scrub de clip-path, parallax multicamada). Ele resolve sequenciamento,
+     easing customizado e scrub em uma API só, o que em vanilla exigiria reimplementar um
+     mini-motor de tweening. Reveals simples (fade/slide) usam IntersectionObserver puro,
+     mais leve e sem dependência. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- ===================== PRELOADER ===================== -->
+<div id="preloader" aria-hidden="true">
+  <div class="preloader__mark">A&N</div>
+  <div class="preloader__count"><span id="preloader-percent">0</span>%</div>
+  <div class="preloader__bar"><div class="preloader__bar-fill" id="preloader-fill"></div></div>
+  <div class="preloader__wipe"></div>
+</div>
+
+<!-- ===================== CURSOR ===================== -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <span class="cursor__label" id="cursor-label"></span>
+</div>
+
+<!-- ===================== SCROLL PROGRESS ===================== -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="#top" class="header__logo">Aurum<span>&</span>Noir</a>
+    <nav class="header__nav">
+      <a href="#colecoes">Coleções</a>
+      <a href="#curadoria">Curadoria</a>
+      <a href="#ouro">O Ouro</a>
+      <a href="#depoimentos">Clientes</a>
+      <a href="#contato" class="header__cta">Agendar Visita</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg-glow" aria-hidden="true"></div>
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <p class="hero__eyebrow">Alta Joalheria — Est. Rio de Janeiro</p>
+        <h1 class="hero__title" data-split>
+          <span class="line">O peso do</span>
+          <span class="line"><em>tempo,</em> em ouro.</span>
+        </h1>
+        <p class="hero__desc">Cada peça da Aurum & Noir carrega uma década de artesania antes de chegar às suas mãos. Não fazemos joias. Lapidamos heranças.</p>
+        <a href="#colecoes" class="btn btn--magnetic" data-magnetic>
+          <span>Ver Coleções</span>
+        </a>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__image-frame" data-tilt>
+          <img
+            src="https://http2.mlstatic.com/D_NQ_NP_882302-MLB107989714842_032026-O.webp"
+            alt="Relógio de luxo cravejado, coleção masculina Aurum & Noir"
+            width="640" height="640"
+            class="hero__image"
+            id="hero-img"
+            onerror="this.closest('.hero__image-frame').classList.add('img-fallback'); this.style.display='none';">
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll-hint" aria-hidden="true"><span></span> Role para explorar</div>
+  </section>
+
+  <!-- ===================== MARQUEE ===================== -->
+  <section class="marquee-section" aria-hidden="true">
+    <div class="marquee marquee--left">
+      <div class="marquee__track">
+        <span>Ouro 18k</span><span>•</span><span>Diamantes Certificados</span><span>•</span><span>Esmeraldas</span><span>•</span><span>Prata 950</span><span>•</span><span>Platina</span><span>•</span>
+        <span>Ouro 18k</span><span>•</span><span>Diamantes Certificados</span><span>•</span><span>Esmeraldas</span><span>•</span><span>Prata 950</span><span>•</span><span>Platina</span><span>•</span>
+      </div>
+    </div>
+    <div class="marquee marquee--right">
+      <div class="marquee__track">
+        <span>Coleção Masculina</span><span>•</span><span>Alta Joalheria</span><span>•</span><span>Peças Sob Encomenda</span><span>•</span><span>Herança Familiar</span><span>•</span>
+        <span>Coleção Masculina</span><span>•</span><span>Alta Joalheria</span><span>•</span><span>Peças Sob Encomenda</span><span>•</span><span>Herança Familiar</span><span>•</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COLEÇÕES (grid, tilt, shine) ===================== -->
+  <section class="collections" id="colecoes">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">Coleções em Destaque</p>
+      <h2 class="section-title">Peças que <em>não</em> seguem tendência.</h2>
+    </div>
+    <div class="collections__grid" data-reveal>
+      <article class="collection-card" data-tilt>
+        <div class="collection-card__media">
+          <img src="https://nxboats.com.br/wp-content/uploads/2025/02/marcas-de-joias-de-luxo.jpg"
+               alt="Composição de joias de marcas de luxo"
+               width="800" height="1000" loading="lazy"
+               onerror="this.closest('.collection-card__media').classList.add('img-fallback'); this.style.display='none';">
+          <div class="shine-sweep" aria-hidden="true"></div>
+        </div>
+        <div class="collection-card__info">
+          <h3>Coleção Ícones</h3>
+          <p class="collection-card__price">a partir de R$ 18.400</p>
+        </div>
+      </article>
+      <article class="collection-card collection-card--tall" data-tilt>
+        <div class="collection-card__media">
+          <img src="https://http2.mlstatic.com/D_NQ_NP_882302-MLB107989714842_032026-O.webp"
+               alt="Relógio cravejado, coleção masculina"
+               width="800" height="1000" loading="lazy"
+               onerror="this.closest('.collection-card__media').classList.add('img-fallback'); this.style.display='none';">
+          <div class="shine-sweep" aria-hidden="true"></div>
+        </div>
+        <div class="collection-card__info">
+          <h3>Coleção Masculina</h3>
+          <p class="collection-card__price">a partir de R$ 32.900</p>
+        </div>
+      </article>
+      <article class="collection-card" data-tilt>
+        <div class="collection-card__media collection-card__media--gradient" aria-hidden="true"></div>
+        <div class="collection-card__info">
+          <h3>Sob Encomenda</h3>
+          <p class="collection-card__price">projeto exclusivo</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== STORYTELLING (clip-path scroll reveal) ===================== -->
+  <section class="storytelling" id="curadoria">
+    <div class="storytelling__sticky">
+      <div class="storytelling__image-wrap">
+        <img
+          src="https://s2.glbimg.com/HpUHPESGHcmQgFzkDU2mJUgbYms=/smart/e.glbimg.com/og/ed/f/original/2022/01/03/joia_em_quadro_7.jpg"
+          alt="Joias em composição emoldurada, curadoria artesanal"
+          width="1200" height="900" loading="lazy"
+          id="story-img"
+          onerror="this.closest('.storytelling__image-wrap').classList.add('img-fallback'); this.style.display='none';">
+        <div class="storytelling__frame" aria-hidden="true"></div>
+      </div>
+      <div class="storytelling__copy" data-reveal>
+        <p class="section-eyebrow">Curadoria Artesanal</p>
+        <h2 class="section-title">Selecionamos antes de lapidar.</h2>
+        <p class="storytelling__text">Nenhuma pedra entra em nosso ateliê sem passar pelas mãos de três gemólogos. Cada moldura é desenhada peça a peça — nada aqui é produzido em série.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== A ARTE DO OURO (parallax) ===================== -->
+  <section class="gold-art" id="ouro">
+    <div class="gold-art__layer gold-art__layer--back" data-parallax="0.15" aria-hidden="true"></div>
+    <div class="gold-art__layer gold-art__layer--image" data-parallax="0.35">
+      <img
+        src="https://comproourocuritiba.com/wp-content/uploads/2024/04/fg.jpg"
+        alt="Peça de ouro 18k em processo de avaliação"
+        width="900" height="1100" loading="lazy"
+        id="gold-img"
+        onerror="this.closest('.gold-art__layer--image').classList.add('img-fallback'); this.style.display='none';">
+    </div>
+    <div class="gold-art__content" data-parallax="0.05">
+      <p class="section-eyebrow section-eyebrow--light">A Arte do Ouro 18k</p>
+      <h2 class="section-title section-title--light">O metal que não <em>enferruja</em> a memória.</h2>
+      <p class="gold-art__text">Fundimos, testamos e certificamos cada grama de ouro que passa pela Aurum & Noir. 750 partes de ouro puro por mil — nunca menos.</p>
+    </div>
+  </section>
+
+  <!-- ===================== CONTADORES ===================== -->
+  <section class="counters" data-reveal>
+    <div class="counter">
+      <span class="counter__number" data-count="27">0</span>
+      <span class="counter__label">Anos de Ofício</span>
+    </div>
+    <div class="counter">
+      <span class="counter__number" data-count="4300">0</span>
+      <span class="counter__label">Clientes Atendidos</span>
+    </div>
+    <div class="counter">
+      <span class="counter__number" data-count="19">0</span>
+      <span class="counter__label">Países Atendidos</span>
+    </div>
+  </section>
+
+  <!-- ===================== DEPOIMENTOS (carousel drag) ===================== -->
+  <section class="testimonials" id="depoimentos">
+    <div class="section-head" data-reveal>
+      <p class="section-eyebrow">Vozes da Casa</p>
+      <h2 class="section-title">Quem já leva um <em>Aurum & Noir.</em></h2>
+    </div>
+    <div class="testimonial-carousel" id="testimonial-carousel">
+      <div class="testimonial-carousel__track" id="testimonial-track">
+        <article class="testimonial">
+          <p class="testimonial__quote">Encomendei uma aliança em ouro para o meu casamento e recebi uma peça que parecia ter sido feita por três gerações de ourives. Impecável.</p>
+          <p class="testimonial__author">Marina Salles</p>
+        </article>
+        <article class="testimonial">
+          <p class="testimonial__quote">O atendimento em ateliê é outro nível. Ninguém apressa a escolha — e isso se sente na peça final.</p>
+          <p class="testimonial__author">Eduardo Prado</p>
+        </article>
+        <article class="testimonial">
+          <p class="testimonial__quote">Comprei um relógio cravejado como presente e o certificado de procedência das pedras veio junto. Confiança rara no mercado.</p>
+          <p class="testimonial__author">Beatriz Andrade</p>
+        </article>
+        <article class="testimonial">
+          <p class="testimonial__quote">Voltei três vezes na mesma semana só para ver os esboços do meu anel sob encomenda evoluírem. Vale a espera.</p>
+          <p class="testimonial__author">Rafael Costa</p>
+        </article>
+      </div>
+      <div class="testimonial-carousel__dots" id="testimonial-dots"></div>
+    </div>
+  </section>
+
+  <!-- ===================== NEWSLETTER ===================== -->
+  <section class="newsletter" id="contato">
+    <div class="newsletter__inner" data-reveal>
+      <p class="section-eyebrow">Lista Privada</p>
+      <h2 class="section-title">Novas peças, primeiro para você.</h2>
+      <form class="newsletter__form" id="newsletter-form" novalidate>
+        <div class="newsletter__field">
+          <input type="email" id="newsletter-email" placeholder="seu@email.com" autocomplete="email" required>
+          <button type="submit" class="btn btn--outline" data-magnetic>
+            <span class="btn__text">Inscrever-se</span>
+            <svg class="btn__check" viewBox="0 0 52 52" aria-hidden="true">
+              <circle cx="26" cy="26" r="24" fill="none"/>
+              <path fill="none" d="M14 27l7 7 16-16"/>
+            </svg>
+          </button>
+        </div>
+        <p class="newsletter__message" id="newsletter-message" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__col footer__col--brand">
+      <p class="footer__logo">Aurum<span>&</span>Noir</p>
+      <p class="footer__tagline">Alta joalheria, lapidada no Rio de Janeiro desde 1999.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Ateliê</h4>
+      <a href="#colecoes">Coleções</a>
+      <a href="#curadoria">Curadoria</a>
+      <a href="#ouro">O Ouro 18k</a>
+    </div>
+    <div class="footer__col">
+      <h4>Atendimento</h4>
+      <a href="#contato">Agendar Visita</a>
+      <a href="#depoimentos">Clientes</a>
+    </div>
+    <div class="footer__col footer__col--social">
+      <h4>Siga</h4>
+      <div class="social-icons">
+        <a href="#" class="social-icon" aria-label="Instagram" data-magnetic>
+          <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm0 6.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5zM16.5 5.5a1 1 0 100 2 1 1 0 000-2z"/><path d="M17 2H7a5 5 0 00-5 5v10a5 5 0 005 5h10a5 5 0 005-5V7a5 5 0 00-5-5zm3 15a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10a3 3 0 013 3v10z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="Pinterest" data-magnetic>
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.3 9.3-.1-.8-.2-2 .1-2.9.2-.9 1.5-6.2 1.5-6.2s-.4-.8-.4-1.9c0-1.8 1-3.1 2.3-3.1 1.1 0 1.6.8 1.6 1.8 0 1.1-.7 2.7-1 4.2-.3 1.3.6 2.3 1.9 2.3 2.3 0 3.9-2.9 3.9-6.4 0-2.7-1.8-4.7-5.1-4.7-3.7 0-6 2.8-6 5.8 0 1.1.4 2.2 1 2.8.1.1.1.2.1.3-.1.4-.3 1.3-.4 1.5-.1.2-.2.3-.4.2-1.6-.7-2.6-3-2.6-4.8 0-3.9 2.8-7.5 8.2-7.5 4.3 0 7.6 3.1 7.6 7.1 0 4.3-2.7 7.7-6.4 7.7-1.2 0-2.4-.6-2.8-1.4l-.8 2.9c-.3 1.1-1.1 2.4-1.6 3.3 1.2.4 2.5.5 3.8.5 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="WhatsApp" data-magnetic>
+          <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.3 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1.1 2.8 1.2 3c.1.2 2.2 3.4 5.3 4.7 3.1 1.3 3.1.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.4A9.9 9.9 0 0012 22c5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18c-1.6 0-3.1-.4-4.5-1.2l-.3-.2-3.2.9.9-3.1-.2-.3A7.9 7.9 0 014 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>© 2026 Aurum & Noir. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- back to top -->
+<button class="back-to-top" id="back-to-top" aria-label="Voltar ao topo">
+  <svg viewBox="0 0 44 44" class="back-to-top__ring">
+    <circle cx="22" cy="22" r="20" />
+  </svg>
+  <span>↑</span>
+</button>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
